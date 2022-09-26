@@ -1,24 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { Button, Stack, Link } from "@mui/material";
+import { PeopleAltTwoTone } from "@mui/icons-material";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex flex-col w-screen h-screen justify-center items-center">
+      <PeopleAltTwoTone sx={{ fontSize: 600, color: "lightblue" }} />
+      <Stack spacing={10} direction="row">
+        <Button variant="contained">
+          <Link href="/register" underline="none" color="white">
+            Register
+          </Link>
+        </Button>
+        <Button variant="contained">
+          <Link href="/login" underline="none" color="white">
+            Login
+          </Link>
+        </Button>
+      </Stack>
     </div>
   );
 }
