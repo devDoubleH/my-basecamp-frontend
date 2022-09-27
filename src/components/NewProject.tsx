@@ -7,6 +7,7 @@ import {
   TextField,
   Box,
   FormHelperText,
+  TextareaAutosize,
 } from "@mui/material";
 
 function NewProject() {
@@ -17,7 +18,6 @@ function NewProject() {
     <Box className="flex w-screen h-screen flex-col justify-center items-center">
       <h1>New Project</h1>
       <FormControl>
-        <InputLabel htmlFor="title">Title</InputLabel>
         <TextField
           id="title"
           value={title}
@@ -27,11 +27,21 @@ function NewProject() {
           inputProps={{
             type: "text",
           }}
-          placeholder="Awesome Project"
+          label="Title"
         />
         <FormHelperText id="title-helper">
           Don't be afraid to innovate
         </FormHelperText>
+        <TextareaAutosize
+          aria-label="minimum height"
+          minRows={3}
+          placeholder="Minimum 3 rows"
+          style={{ width: 200 }}
+          value={descripion}
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+        />
       </FormControl>
     </Box>
   );

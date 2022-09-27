@@ -50,7 +50,14 @@ function Dashboard() {
           <PeopleAltTwoTone sx={{ fontSize: 80, color: "lightblue" }} />
         </Link>
         <nav className="flex justify-around items-center gap-5">
-          <Button variant="outlined">New Project</Button>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              navigate("/newproject");
+            }}
+          >
+            New Project
+          </Button>
           <Button variant="outlined">Edit Profile</Button>
           <Button variant="outlined">Logout</Button>
         </nav>
