@@ -32,8 +32,6 @@ function Register() {
   }, [error, success]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
     if (password.length < 6) {
       setError("Password must be at least 6 characters");
     }
