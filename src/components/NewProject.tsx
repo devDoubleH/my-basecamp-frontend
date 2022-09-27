@@ -15,8 +15,8 @@ function NewProject() {
   const [descripion, setDescription] = useState("");
 
   return (
-    <Box className="flex w-screen h-screen flex-col justify-center items-center">
-      <h1>New Project</h1>
+    <Box className="flex w-screen h-screen flex-col justify-start items-center">
+      <h1 className="text-4xl color-black text-center my-4">New Project</h1>
       <FormControl>
         <TextField
           id="title"
@@ -30,7 +30,7 @@ function NewProject() {
           label="Title"
         />
         <FormHelperText id="title-helper">
-          Don't be afraid to innovate
+          Don't be afraid to innovate 💡
         </FormHelperText>
         <TextareaAutosize
           aria-label="minimum height"
@@ -41,6 +41,7 @@ function NewProject() {
           onChange={(e) => {
             setDescription(e.target.value);
           }}
+          className="border-1"
         />
       </FormControl>
     </Box>
