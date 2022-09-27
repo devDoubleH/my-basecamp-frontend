@@ -43,11 +43,11 @@ function Login() {
         password,
       })
       .then((res) => {
-        console.log(res);
+        localStorage.setItem("token", res.data.token);
         if (res.status === 200) {
           setSubmit(true);
           setSuccess("Login successful");
-          // navigate("/");
+          navigate("/dashboard");
         }
       })
       .catch((err) => {

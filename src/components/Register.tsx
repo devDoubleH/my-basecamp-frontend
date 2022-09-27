@@ -55,7 +55,7 @@ function Register() {
         password,
       })
       .then((res) => {
-        console.log(res);
+        localStorage.setItem("token", res.data.token);
         if (res.status === 200) {
           setSuccess("Registration successful");
           setSubmit(true);
@@ -65,6 +65,7 @@ function Register() {
         }
       })
       .catch((err) => {
+        console.log(err);
         setSubmit(true);
         setError(err.response.data.msg);
       });
