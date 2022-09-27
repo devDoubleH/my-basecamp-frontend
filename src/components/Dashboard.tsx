@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { PeopleAltTwoTone } from "@mui/icons-material";
 import { Button, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
