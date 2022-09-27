@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { PeopleAltTwoTone } from "@mui/icons-material";
-import { TextField, Button, Link, Alert } from "@mui/material";
+import { TextField, Button, Link, Alert, Slide } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
 import api from "../api";
 
 function Register() {
@@ -9,8 +11,25 @@ function Register() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
+  const [submit, setSubmit] = useState(false);
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 2000);
+    }
+    if (success) {
+      setTimeout(() => {
+        setSuccess("");
+      }, 2000);
+    }
+  }, [error, success]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,30 +60,48 @@ function Register() {
         console.log(res);
         if (res.status === 200) {
           setSuccess("Registration successful");
+          setSubmit(true);
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 2000);
         }
       })
       .catch((err) => {
-        console.log(err);
+        setSubmit(true);
+        setError(err.response.data.msg);
       });
   };
 
   return (
     <div className="flex flex-col justify-center items-center">
-      {error && <Alert severity="error">{error}</Alert>}
-      {success && <Alert severity="success">{success}</Alert>}
+      {error ? (
+        <Slide direction="down" in={submit} mountOnEnter unmountOnExit>
+          <Alert severity="error" className="absolute top-10 left-3/4">
+            {error}
+          </Alert>
+        </Slide>
+      ) : null}
+      {success ? (
+        <Slide direction="down" in={submit} mountOnEnter unmountOnExit>
+          <Alert severity="success" className="absolute top-10 left-3/4">
+            {success}
+          </Alert>
+        </Slide>
+      ) : null}
+
       <PeopleAltTwoTone sx={{ fontSize: 300, color: "lightblue" }} />
       <div className="flex flex-col justify-center items-center gap-5">
         <TextField
           label="Name"
           variant="filled"
-          sx={{ width: 500 }}
+          sx={{ minWidth: 400 }}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <TextField
           label="Email"
           variant="filled"
-          sx={{ width: 500 }}
+          sx={{ minWidth: 400 }}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           inputProps={{ type: "email" }}
@@ -72,18 +109,18 @@ function Register() {
         <TextField
           label="Password"
           variant="filled"
-          sx={{ width: 500 }}
+          sx={{ minWidth: 400 }}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           inputProps={{
             type: "password",
-            inputProps: { min: 6, max: 10 },
+            inputprops: { min: 6, max: 10 },
           }}
         />
         <TextField
           label="Confirm Password"
           variant="filled"
-          sx={{ width: 500 }}
+          sx={{ minWidth: 400 }}
           value={password2}
           onChange={(e) => setPassword2(e.target.value)}
           inputProps={{
@@ -91,7 +128,9 @@ function Register() {
             inputProps: { min: 6, max: 10 },
           }}
         />
-        <Button variant="contained">Register</Button>
+        <Button variant="outlined" onClick={(e: any) => handleSubmit(e)}>
+          Register
+        </Button>
         <Link href="/login" underline="none" color="#3F51B5">
           Already have an account? Login
         </Link>
