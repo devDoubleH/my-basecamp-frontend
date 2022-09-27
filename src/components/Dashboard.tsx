@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { PeopleAltTwoTone } from "@mui/icons-material";
-import { Button, Link, Tab, Tabs, Typography, Box } from "@mui/material";
+import { Button, Link, Tab, Box } from "@mui/material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
@@ -17,31 +18,6 @@ function Dashboard() {
       navigate("/login");
     }
   }, []);
-
-  interface TabPanelProps {
-    children?: React.ReactNode;
-
-    value: string;
-  }
-
-  function TabPanel(props: TabPanelProps) {
-    const { children, value, ...other } = props;
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== "1"}
-        id={`simple-tabpanel-${value}`}
-        aria-labelledby={`simple-tab-${value}`}
-        {...other}
-      >
-        {value === "1" && (
-          <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -62,22 +38,18 @@ function Dashboard() {
           <Button variant="outlined">Logout</Button>
         </nav>
       </header>
-      <Box>
-        <Tabs
-          value={0}
-          aria-label="basic tabs example"
-          sx={{ width: "100%", maxWidth: 500 }}
-          onChange={handleChange}
-        >
-          <Tab label="All Projects" />
-          <Tab label="Created by me" />
-          <Tab label="Shared with me" />
-        </Tabs>
-      </Box>
-
-      <TabPanel value="1">Item one</TabPanel>
-      <TabPanel value="2">Item two</TabPanel>
-      <TabPanel value="3">Item three</TabPanel>
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Tab label="All Projects" value="1" />
+            <Tab label="Created by me" value="2" />
+            <Tab label="Shared with me" value="3" />
+          </TabList>
+        </Box>
+        <TabPanel value="1">Item One</TabPanel>
+        <TabPanel value="2">Item Two</TabPanel>
+        <TabPanel value="3">Item Three</TabPanel>
+      </TabContext>
     </div>
   );
 }

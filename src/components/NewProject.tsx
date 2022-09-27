@@ -6,11 +6,41 @@ import {
   Box,
   FormHelperText,
   TextareaAutosize,
+  Alert,
+  Slide,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import api from "../api";
 
 function NewProject() {
   const [title, setTitle] = useState("");
   const [descripion, setDescription] = useState("");
+
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    if (!title) {
+      setError("Title is required.");
+    }
+
+    api
+      .post("/project", {
+        name: title,
+        token: localStorage.getItem("token"),
+        descripion,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          navigate("/dashboard");
+        }
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+  };
 
   return (
     <Box className="flex w-screen h-screen flex-col justify-start items-center">
@@ -45,7 +75,13 @@ function NewProject() {
           Write awesome descriptions 👨‍🎨
         </FormHelperText>
         <Box className="flex w-full justify-center items-center mt-4">
-          <Button variant="contained" className="w-1/3">
+          <Button
+            variant="contained"
+            className="w-1/3"
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
             Create 🚀
           </Button>
         </Box>
