@@ -19,6 +19,9 @@ export default function EditProject() {
   const [isDelete, setDelete] = useState(false);
   const [text, setText] = useState("");
 
+  const [projectName, setProjectName] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -57,15 +60,29 @@ export default function EditProject() {
 
   return (
     <div className="flex flex-col w-screen h-screen justify-start items-center">
-      <Slide
-        direction="down"
-        in={true}
-        mountOnEnter
-        unmountOnExit
-        className="absolute top-24 left-[70%]"
-      >
-        <Alert severity="error"></Alert>
-      </Slide>
+      {error && (
+        <Slide
+          direction="down"
+          in={true}
+          mountOnEnter
+          unmountOnExit
+          className="absolute top-24 left-[70%]"
+        >
+          <Alert severity="error">{error}</Alert>
+        </Slide>
+      )}
+      {success && (
+        <Slide
+          direction="down"
+          in={true}
+          mountOnEnter
+          unmountOnExit
+          className="absolute top-24 left-[70%]"
+        >
+          <Alert severity="success">{success}</Alert>
+        </Slide>
+      )}
+
       <header className="flex w-screen justify-between items-center gap-5 px-10 border-b border-gray-700">
         <Link href="/dashboard" underline="none">
           <PeopleAltTwoTone sx={{ fontSize: 80, color: "lightblue" }} />
@@ -91,12 +108,20 @@ export default function EditProject() {
             label="Project Name"
             variant="outlined"
             className="w-1/2"
+            value={projectName}
+            onChange={(e) => {
+              setProjectName(e.target.value);
+            }}
           />
           <TextField
             id="outlined-basic"
             label="Project Description"
             variant="outlined"
             className="w-1/2"
+            value={projectDescription}
+            onChange={(e) => {
+              setProjectDescription(e.target.value);
+            }}
           />
           <Button variant="contained" className="w-1/2">
             update
