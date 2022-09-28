@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Link,
   Button,
@@ -7,7 +7,8 @@ import {
   FormGroup,
   FormControlLabel,
 } from "@mui/material";
-import { PeopleAltTwoTone, Add } from "@mui/icons-material";
+import { PeopleAltTwoTone } from "@mui/icons-material";
+import { Slide, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
@@ -17,6 +18,9 @@ export default function EditProject() {
   const [edit, setEdit] = useState(false);
   const [isDelete, setDelete] = useState(false);
   const [text, setText] = useState("");
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const id = localStorage.getItem("project");
 
@@ -36,12 +40,32 @@ export default function EditProject() {
         email: text,
       })
       .then((res) => {
-        console.log(res);
+        if (res.status === 200) {
+          setSuccess("Member added successfully");
+          setTimeout(() => {
+            setSuccess("");
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+        setTimeout(() => {
+          setError("");
+        }, 2000);
       });
   };
 
   return (
     <div className="flex flex-col w-screen h-screen justify-start items-center">
+      <Slide
+        direction="down"
+        in={true}
+        mountOnEnter
+        unmountOnExit
+        className="absolute top-24 left-[70%]"
+      >
+        <Alert severity="error"></Alert>
+      </Slide>
       <header className="flex w-screen justify-between items-center gap-5 px-10 border-b border-gray-700">
         <Link href="/dashboard" underline="none">
           <PeopleAltTwoTone sx={{ fontSize: 80, color: "lightblue" }} />
