@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import NewProject from "./components/NewProject";
+import EditProject from "./components/EditProject";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -23,6 +24,7 @@ root.render(
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/newproject" element={<NewProject />} />
+        <Route path="/editproject" element={<EditProject />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

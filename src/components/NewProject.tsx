@@ -21,29 +21,46 @@ function NewProject() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    if (!title) {
+    if (title === "") {
       setError("Title is required.");
+      return;
     }
 
+    const data = {
+      name: title,
+      description: descripion,
+      id: localStorage.getItem("id"),
+    };
+
     api
-      .post("/project", {
-        name: title,
-        token: localStorage.getItem("token"),
-        descripion,
-      })
+      .post("/project", data)
       .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          navigate("/dashboard");
-        }
+        navigate("/dashboard");
       })
       .catch((err) => {
-        setError(err.response.data.message);
+        setError(err.response.data.msg);
       });
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setError("");
+    }, 1500);
+  }, [error]);
+
   return (
     <Box className="flex w-screen h-screen flex-col justify-start items-center">
+      {error && (
+        <Slide
+          direction="down"
+          in={true}
+          mountOnEnter
+          unmountOnExit
+          className="absolute left-[70%] top-5"
+        >
+          <Alert severity="error">{error}</Alert>
+        </Slide>
+      )}
       <h1 className="text-4xl color-black text-center my-4">New Project 🐣</h1>
       <FormControl className="w-1/3">
         <TextField

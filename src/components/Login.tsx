@@ -43,7 +43,8 @@ function Login() {
         password,
       })
       .then((res) => {
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("id", res.data._id);
+        console.log(res);
         if (res.status === 200) {
           setSubmit(true);
           setSuccess("Login successful");
