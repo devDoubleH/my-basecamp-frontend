@@ -58,6 +58,28 @@ export default function EditProject() {
       });
   };
 
+  const updateProject = () => {
+    api
+      .put(`update/project/${id}`, {
+        name: projectName,
+        description: projectDescription,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setSuccess("Project updated successfully");
+          setTimeout(() => {
+            setSuccess("");
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+        setTimeout(() => {
+          setError("");
+        }, 2000);
+      });
+  };
+
   return (
     <div className="flex flex-col w-screen h-screen justify-start items-center">
       {error && (
@@ -123,7 +145,13 @@ export default function EditProject() {
               setProjectDescription(e.target.value);
             }}
           />
-          <Button variant="contained" className="w-1/2">
+          <Button
+            variant="contained"
+            className="w-1/2"
+            onClick={() => {
+              updateProject();
+            }}
+          >
             update
           </Button>
         </form>
